@@ -96,6 +96,7 @@ body {
   letter-spacing: 3px;
   color: white;
 }
+
 .intro__btn button:hover:before {
   content: "";
   background-image: conic-gradient(
