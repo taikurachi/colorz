@@ -1,0 +1,255 @@
+body {
+  position: relative;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  transition: background-color 3s ease-in-out;
+}
+.color-name {
+  position: absolute;
+  font-size: 14px;
+  font-family: "Courier New", monospace;
+  pointer-events: none;
+  animation: color-grow 5s linear 1;
+  z-index: 1;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.color-name-inner {
+  display: inline-block;
+  animation: color-grow 5s linear 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes color-grow {
+  0% {
+    font-size: 14px;
+  }
+  100% {
+    font-size: 160px;
+  }
+}
+
+.splotch {
+  position: absolute;
+  background-color: inherit;
+  border-radius: 50%;
+  animation: splotch-animation 1s forwards;
+  overflow: hidden;
+  width: var(--splotch-size);
+  height: var(--splotch-size);
+  opacity: 50%;
+}
+
+/* Add this block */
+.splotch:before,
+.splotch:after {
+  position: absolute;
+  border-radius: 50%;
+  background-color: inherit;
+  content: "";
+}
+
+.splotch:before {
+  width: 100%;
+  height: 100%;
+  top: var(--before-top);
+  left: var(--before-left);
+  transform: translateY(-50%);
+}
+
+.splotch::after {
+  width: var(--after-width);
+  height: var(--after-height);
+  top: var(--after-top);
+  left: var(--after-left);
+  transform: translateY(-50%);
+}
+
+@keyframes splotch-animation {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Drip effect
+.drip {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: inherit;
+  border-radius: 50%;
+  animation: drip 3s linear infinite;
+}
+
+@keyframes drip {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(100px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(150px);
+    opacity: 0;
+  }
+} */
+
+.gameOver {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 200px;
+  white-space: nowrap;
+  color: red;
+  z-index: 1;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  text-shadow: 10px 10px 2px rgba(0, 0, 0, 0.5);
+  -webkit-text-stroke: 1px black;
+}
+
+.directions {
+  border: 2px solid black;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 20px;
+  opacity: 50%;
+  background-color: white;
+}
+
+#scoreboard {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  font-size: 40px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+#colorInput {
+  position: absolute;
+  left: 50%;
+  top: 10%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  padding: 10px 10px;
+  font-size: 20px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+#playAgainButton {
+  font-size: 24px;
+  position: absolute;
+  top: 68%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.2s;
+  z-index: 1;
+  border-radius: 10px;
+  border: 2px solid white;
+  box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.5);
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+#playAgainButton:hover {
+  background-color: #45a049;
+}
+
+.hidden {
+  display: none;
+}
+
+/* .container {
+  display: flex;
+  height: 400px;
+  justify-content: center;
+  align-: center;
+  z-index: 1;
+} */
+
+.item {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  font-size: 9rem;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-weight: bolder;
+  -webkit-text-stroke: 3px white;
+}
+
+.changeColor {
+  background-color: lightblue;
+}
+
+#startGame {
+  font-size: 70px;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 25px 25px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.2s;
+  z-index: 1;
+  border-radius: 10px;
+  border: 2px solid white;
+  box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.5);
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+
+#startGame:hover {
+  background-color: #45a049;
+}
+
+.item3 {
+  position: absolute;
+  color: lightcoral;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  animation: increaseTextSize 5s linear infinite;
+}
+
+@keyframes increaseTextSize {
+  0% {
+    font-size: 30px;
+  }
+  100% {
+    font-size: 40px;
+  }
+}
+
+#highScore {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+  font-size: 40px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
