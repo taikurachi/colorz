@@ -1,4 +1,4 @@
-let colors = [
+const colors = [
   "red",
   "blue",
   "green",
@@ -50,84 +50,67 @@ let colors = [
   "snow",
   "black",
 ];
-// Initialize variables to store the typed string and the current score
 
 let typedString = "";
 let score = 0;
-
-let gameOverTriggered = false; //set up flag for game over
 let colorSpawnInterval;
-
-// Function to increment the score and update the score display
-
+let highscore = 0;
+const startTime = new Date().getTime();
+const colorElements = [];
+const highScoreElement = document.getElementById("highScore");
+const scoreElement = document.getElementById("score");
+const endText = "Game Over";
+const typedText = document.querySelector(".gameOver");
+const colorElementsContainer = document.querySelector(
+  ".color-elements__container"
+);
 function incrementScore() {
-  if (gameOverTriggered) {
-    return;
-  }
   score++;
-  let scoreElement = document.getElementById("score");
-  scoreElement.textContent = score; //update score display
+  scoreElement.textContent = score;
   if (score >= 2) {
-    clearInterval(colorSpawnInterval); //clear interval for spawning
-    intervalDecider = getSpawnInterval();
-    colorSpawnInterval = setInterval(createRandomColorElement, intervalDecider); //new interval
-    console.log(intervalDecider);
+    clearInterval(colorSpawnInterval);
+    colorSpawnInterval = setInterval(
+      createRandomColorElement,
+      getSpawnInterval()
+    );
   }
 }
 
 //game over animation
 function typeGameOver() {
   let i = 0;
-  let endText = "Game Over";
-  let typedText = document.querySelector(".gameOver");
-
-  let intervalId = setInterval(typeLetter, 180); // Call typeLetter every 180ms
+  let intervalId = setInterval(typeLetter, 180);
 
   function typeLetter() {
-    typedText.textContent += endText[i]; // Append next letter to text content
-    i++; // Increment index
+    typedText.textContent += endText[i];
+    i++;
 
     if (i === endText.length) {
-      clearInterval(intervalId); // Stop the interval when all letters have been typed
-      console.log("done typing");
-      let buttonGameOver = document.querySelector(".hidden");
+      clearInterval(intervalId);
+      const buttonGameOver = document.querySelector(".hidden");
       buttonGameOver.classList.remove("hidden");
-      console.log(buttonGameOver);
     }
-  }
-}
-
-// Flag to prevent multiple "Game Over" animations from being triggered
-
-let hasGameOverBeenCalled = false;
-
-// Function to end the game and stop spawning colors
-function gameOver(color) {
-  gameOverTriggered = true;
-  clearInterval(colorSpawnInterval); //
-  document.body.style.backgroundColor = color;
-  if (score > highScore) {
-    highScore = score;
-    localStorage.setItem("highScore", highScore); //high score storage
-    let highScoreElement = document.getElementById("highScore");
-    highScoreElement.textContent = "High Score: " + highScore; //updating high score element
   }
 }
 
 // Function to create a random color element on the screen
 function createRandomColorElement() {
-  let color = colors[Math.floor(Math.random() * colors.length)];
-  let colorElement = document.createElement("span");
-  const fontSizeComputed = getComputedStyle(colorElement);
-  let colorInnerText = document.createElement("span");
-  colorInnerText.textContent = color;
-  colorInnerText.classList.add("color-name-inner");
-  colorElement.appendChild(colorInnerText);
-  colorElement.classList.add("color-name");
-  colorElement.dataset.fontSize = getComputedStyle(colorElement).fontSize;
+  const color = colors[Math.floor(Math.random() * colors.length)];
+  const colorElement = document.createElement("span");
+  const randomAnimationTypes = [
+    "animation-type1",
+    "animation-type2",
+    "animation-type3",
+    "animation-type4",
+  ];
+  const randomAnimation =
+    randomAnimationTypes[
+      Math.floor(Math.random() * randomAnimationTypes.length)
+    ];
+  colorElement.textContent = color;
+  colorElement.classList.add("color-created", randomAnimation);
   colorElement.style.color = color;
-
-  document.body.appendChild(colorElement);
+  colorElementsContainer.appendChild(colorElement);
 
   // Calculate position before appending to the DOM
 
@@ -136,105 +119,57 @@ function createRandomColorElement() {
   let yPos = Math.random() * (window.innerHeight - elementRect.height);
   colorElement.style.left = xPos + "px";
   colorElement.style.top = yPos + "px";
-
   colorElement.velocityX = (Math.random() - 0.5) * 4;
   colorElement.velocityY = (Math.random() - 0.5) * 4;
   colorElements.push(colorElement);
-  scheduleColorElementRemoval(colorElement, 10000); // 10 seconds delay
-
-  // Set a unique ID for the color element and set a timeout to remove it after 10 seconds
   colorElement.id = "color-" + color;
-
-  function scheduleColorElementRemoval(colorElement, delay) {
-    let creationTime = new Date().getTime();
-
-    setTimeout(function () {
-      if (document.getElementById("color-" + color)) {
-        let colorElement = document.getElementById("color-" + color);
-        let elementRect = colorElement.getBoundingClientRect();
-
-        // Check if the element is visible within the viewport
-        let isVisible =
-          elementRect.top >= -elementRect.height / 2 &&
-          elementRect.left >= -elementRect.width / 2 &&
-          elementRect.bottom <= window.innerHeight + elementRect.height / 2 &&
-          elementRect.right <= window.innerWidth + elementRect.width / 2;
-
-        let currentTime = new Date().getTime();
-        let timeOnScreen = currentTime - creationTime;
-
-        if (isVisible && timeOnScreen > 10000 && !hasGameOverBeenCalled) {
-          typeGameOver();
-          gameOver(color);
-          hasGameOverBeenCalled = true;
-        } else {
-          removeColorElement(colorElement.id.split("-")[1]);
-        }
-      }
-    }, delay);
-  }
 }
 
 // Function to create a splotch on the screen
 function createSplotch(color, x, y, fontSize) {
-  // Create a new splotch element and set its position and background color
-  let splotchElement = document.createElement("div");
+  const splotchElement = document.createElement("div");
   splotchElement.classList.add("splotch");
   splotchElement.style.left = x + "px";
   splotchElement.style.top = y + "px";
   splotchElement.style.backgroundColor = color;
 
-  // Set the size of the splotch based on the font size
+  const scaleFactor = fontSize / 14;
 
-  let scaleFactor = fontSize / 14;
-
-  // Set random values for the before and after pseudo-elements of the splotch
   splotchElement.style.setProperty("--splotch-size", 50 * scaleFactor + "px");
-  splotchElement.style.setProperty("--before-top", Math.random() * 50 + "%");
-  splotchElement.style.setProperty("--before-left", Math.random() * 50 + "%");
-
-  splotchElement.style.setProperty(
-    "--after-width",
-    30 + Math.random() * 40 + "%"
-  );
-  splotchElement.style.setProperty(
-    "--after-height",
-    30 + Math.random() * 40 + "%"
-  );
-  splotchElement.style.setProperty(
-    "--after-top",
-    50 + Math.random() * 50 + "%"
-  );
-  splotchElement.style.setProperty("--after-left", Math.random() * 50 + "%");
-
-  document.body.appendChild(splotchElement);
+  colorElementsContainer.appendChild(splotchElement);
 }
 
-function displayGameOverText(gameOverElement, index = 0) {
-  if (index < gameOverElement.textContent.length) {
-    let letterElement = document.createElement("span");
-    letterElement.textContent = gameOverElement.textContent[index];
-    gameOverElement.appendChild(letterElement);
-
-    setTimeout(() => displayGameOverText(gameOverElement, index + 1), 100);
-  }
+function gameOverHappen() {
+  colorElementsContainer.addEventListener("animationend", function (event) {
+    if (event.target.classList.contains("color-created")) {
+      const targetElement = event.target;
+      const color = getComputedStyle(targetElement).color;
+      clearInterval(colorSpawnInterval);
+      colorElementsContainer.replaceChildren();
+      createSplotch(color, -500, -500, 700);
+      typeGameOver();
+      if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("highScore", highScore);
+        let highScoreElement = document.getElementById("highScore");
+        highScoreElement.textContent = "High Score: " + highScore;
+      }
+    }
+  });
 }
+gameOverHappen();
 
 function removeColorElement(color) {
-  let colorElement = document.getElementById("color-" + color);
-  if (colorElement) {
-    document.body.removeChild(colorElement);
-  }
+  document.getElementById("color-" + color).remove();
 }
 
 document
   .getElementById("colorInput")
   .addEventListener("input", function (event) {
-    typedString = event.target.value.toLowerCase(); //typing into the input box instead of randomly typing onto the screen
-
+    typedString = event.target.value.toLowerCase();
     colors.forEach(function (color) {
-      if (typedString.endsWith(color)) {
-        let colorElement = document.getElementById("color-" + color);
+      if (typedString === color) {
+        const colorElement = document.getElementById("color-" + color);
         if (colorElement) {
           let computedFontSize = parseFloat(
             getComputedStyle(colorElement).fontSize
@@ -258,17 +193,7 @@ document
     });
   });
 
-let intervalDecider = 2000;
-
-function intervalTimer() {
-  colorSpawnInterval = setInterval(function () {
-    createRandomColorElement();
-  }, intervalDecider);
-}
-
-intervalTimer();
-
-let colorElements = [];
+colorSpawnInterval = setInterval(createRandomColorElement, getSpawnInterval());
 
 function updateColorElementPositions() {
   //iterate through each color element
@@ -279,7 +204,6 @@ function updateColorElementPositions() {
     let currentY = parseFloat(colorElement.style.top);
 
     // Calculate the new X and Y positions of the color element
-
     let newX = currentX + colorElement.velocityX;
     let newY = currentY + colorElement.velocityY;
 
@@ -299,37 +223,28 @@ function updateColorElementPositions() {
       newY = Math.min(Math.max(newY, 0), window.innerHeight - elementHeight); //limit the new y position to be within the viewport
     }
 
-    // Update the element's position
     colorElement.style.left = newX + "px";
     colorElement.style.top = newY + "px";
   });
 
-  // Call this function again on the next animation frame
   requestAnimationFrame(updateColorElementPositions);
 }
 
-// Start updating the element positions
 updateColorElementPositions();
 
-let startTime = new Date().getTime();
-//creating faster spawn intervals to make the game harder
 function getSpawnInterval() {
-  let baseInterval = 2000;
-  let intervalDecrease = 1000;
-  let minimumInterval = 900;
-  let timePlayed = new Date().getTime() - startTime;
+  const baseInterval = 2000;
+  const intervalDecrease = 1000;
+  const minimumInterval = 800;
+  const timePlayed = new Date().getTime() - startTime;
 
-  let newInterval =
+  const newInterval =
     baseInterval - Math.floor(timePlayed / intervalDecrease) * 30; // game becomes harder the longer you play
   return Math.max(newInterval, minimumInterval);
 }
 
-// Initialize a variable to store the high score
-let highScore = 0;
-
 // Load the high score from localStorage (if it exists)
 if (localStorage.getItem("highScore")) {
   highScore = parseInt(localStorage.getItem("highScore"));
-  let highScoreElement = document.getElementById("highScore");
   highScoreElement.textContent = "High Score: " + highScore;
 }

@@ -3,31 +3,74 @@ body {
   height: 100vh;
   margin: 0;
   overflow: hidden;
-  transition: background-color 3s ease-in-out;
+  transition: background-color 1s ease-in-out;
 }
 
-.color-name {
-  position: absolute;
-  font-size: 14px;
-  font-family: "Courier New", monospace;
-  pointer-events: none;
-  animation: color-grow 5s linear 1;
-  z-index: 1;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.color-name-inner {
+.color-created {
+  font-family: "Indie Flower", cursive;
+  font-weight: 400;
+  font-style: normal;
   display: inline-block;
-  animation: color-grow 5s linear 1;
+  position: absolute;
   animation-fill-mode: forwards;
+  z-index: 1000;
+  text-shadow: 1px 1px 2px black;
+}
+.animation-type1 {
+  animation: color-grow1 5s linear 1;
 }
 
-@keyframes color-grow {
+.animation-type2 {
+  animation: color-grow2 5s linear 1;
+}
+.animation-type3 {
+  animation: color-grow3 5s linear 1;
+}
+.animation-type4 {
+  animation: color-grow4 5s linear 1;
+}
+@keyframes color-grow1 {
   0% {
     font-size: 14px;
   }
-  100% {
+  80% {
     font-size: 160px;
+  }
+  100% {
+    transform: rotate(45deg);
+  }
+}
+@keyframes color-grow2 {
+  0% {
+    font-size: 14px;
+  }
+  80% {
+    font-size: 160px;
+  }
+  100% {
+    transform: rotate(30deg);
+  }
+}
+@keyframes color-grow3 {
+  0% {
+    font-size: 14px;
+  }
+  80% {
+    font-size: 160px;
+  }
+  100% {
+    transform: rotate(-45deg);
+  }
+}
+@keyframes color-grow4 {
+  0% {
+    font-size: 14px;
+  }
+  80% {
+    font-size: 160px;
+  }
+  100% {
+    transform: rotate(-30deg);
   }
 }
 .splotch {
@@ -39,30 +82,6 @@ body {
   width: var(--splotch-size);
   height: var(--splotch-size);
   opacity: 50%;
-}
-
-.splotch:before,
-.splotch:after {
-  position: absolute;
-  border-radius: 50%;
-  background-color: inherit;
-  content: "";
-}
-
-.splotch:before {
-  width: 100%;
-  height: 100%;
-  top: var(--before-top);
-  left: var(--before-left);
-  transform: translateY(-50%);
-}
-
-.splotch::after {
-  width: var(--after-width);
-  height: var(--after-height);
-  top: var(--after-top);
-  left: var(--after-left);
-  transform: translateY(-50%);
 }
 
 @keyframes splotch-animation {
@@ -95,6 +114,7 @@ body {
   font-size: 40px;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
+  z-index: 1000;
 }
 
 #colorInput {
@@ -166,15 +186,6 @@ body {
   background-color: #45a049;
 }
 
-@keyframes increaseTextSize {
-  0% {
-    font-size: 30px;
-  }
-  100% {
-    font-size: 40px;
-  }
-}
-
 #highScore {
   position: absolute;
   top: 2%;
@@ -182,4 +193,5 @@ body {
   font-size: 40px;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
+  z-index: 1000;
 }
