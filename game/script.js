@@ -64,6 +64,7 @@ const typedText = document.querySelector(".gameOver");
 const colorElementsContainer = document.querySelector(
   ".color-elements__container"
 );
+
 function incrementScore() {
   score++;
   scoreElement.textContent = score;
@@ -110,19 +111,16 @@ function createRandomColorElement() {
   colorElement.textContent = color;
   colorElement.classList.add("color-created", randomAnimation);
   colorElement.style.color = color;
-  colorElementsContainer.appendChild(colorElement);
-
-  // Calculate position before appending to the DOM
-
-  let elementRect = colorElement.getBoundingClientRect();
-  let xPos = Math.random() * (window.innerWidth - elementRect.width);
-  let yPos = Math.random() * (window.innerHeight - elementRect.height);
+  const elementRect = colorElement.getBoundingClientRect();
+  const xPos = Math.random() * (window.innerWidth - elementRect.width);
+  const yPos = Math.random() * (window.innerHeight - elementRect.height);
   colorElement.style.left = xPos + "px";
   colorElement.style.top = yPos + "px";
   colorElement.velocityX = (Math.random() - 0.5) * 4;
   colorElement.velocityY = (Math.random() - 0.5) * 4;
   colorElements.push(colorElement);
   colorElement.id = "color-" + color;
+  colorElementsContainer.appendChild(colorElement);
 }
 
 // Function to create a splotch on the screen
