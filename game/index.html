@@ -5,29 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Random Colors</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <script defer src="script.js"></script>
+    <script defer type="module" src="controller.js"></script>
   </head>
   <body>
-    <div class="scoreContainer">
-      <div id="scoreboard">Score: <span id="score">0</span></div>
-      <div id="highScore">High Score: 0</div>
+    <div class="score-container">
+      <div class="score__scoreboard">Score: 0</div>
+      <div class="score__highScore">High Score: 0</div>
     </div>
     <input
       type="text"
-      id="colorInput"
+      class="color-input"
       placeholder="Type the color name"
       autofocus
     />
     <div class="color-elements__container"></div>
-    <div class="gameOver"></div>
-    <a href="http://taikurachi.github.io/colorz/game"
-      ><button id="playAgainButton" class="hidden">Play Again</button></a
-    >
+    <div class="text-container">
+      <div class="text-gameOver"></div>
+      <a href="http://taikurachi.github.io/colorz/game"
+        ><p class="play-again-btn">Play Again</p></a
+      >
+    </div>
   </body>
 </html>

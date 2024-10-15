@@ -5,11 +5,6 @@
   font-family: "Outfit", sans-serif;
 }
 
-@font-face {
-  font-family: myFont;
-  src: url(RubikDoodleShadow-Regular.ttf);
-}
-
 body {
   background-color: lightblue;
 }
@@ -32,8 +27,8 @@ body {
 
 .intro__header {
   font-size: 10rem;
-  font-family: myFont;
   font-weight: 800;
+  -webkit-text-stroke: 1px black;
 
   background-image: linear-gradient(
     to right,
@@ -79,7 +74,6 @@ body {
 .intro__btn button {
   padding: 15px 50px 15px 50px;
   border-radius: 20px;
-  /* border: none; */
   font-size: 2rem;
   color: black;
   background: white;
@@ -87,7 +81,6 @@ body {
   border: 2px solid transparent;
   position: relative;
   font-weight: 100;
-  /* transition: outline 0.2s ease; */
 }
 
 .intro__btn button:hover {

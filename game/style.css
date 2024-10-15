@@ -1,14 +1,33 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+}
+html {
+  overflow: hidden;
+}
 body {
   position: relative;
   height: 100vh;
   margin: 0;
-  overflow: hidden;
+  overflow-x: hidden;
   transition: background-color 1s ease-in-out;
+  font-family: "Outfit", sans-serif;
+}
+
+.score-container {
+  padding: 2% 2%;
+  display: flex;
+  justify-content: space-between;
+  font-size: clamp(12px, 3vw, 2rem);
 }
 
 .color-created {
-  font-family: "Indie Flower", cursive;
-  font-weight: 400;
+  font-family: "quiroh", sans-serif;
+  font-weight: 500;
   font-style: normal;
   display: inline-block;
   position: absolute;
@@ -20,15 +39,6 @@ body {
   animation: color-grow1 5s linear 1;
 }
 
-.animation-type2 {
-  animation: color-grow2 5s linear 1;
-}
-.animation-type3 {
-  animation: color-grow3 5s linear 1;
-}
-.animation-type4 {
-  animation: color-grow4 5s linear 1;
-}
 @keyframes color-grow1 {
   0% {
     font-size: 14px;
@@ -37,48 +47,16 @@ body {
     font-size: 160px;
   }
   100% {
-    transform: rotate(45deg);
-  }
-}
-@keyframes color-grow2 {
-  0% {
     font-size: 14px;
   }
-  80% {
-    font-size: 160px;
-  }
-  100% {
-    transform: rotate(30deg);
-  }
 }
-@keyframes color-grow3 {
-  0% {
-    font-size: 14px;
-  }
-  80% {
-    font-size: 160px;
-  }
-  100% {
-    transform: rotate(-45deg);
-  }
-}
-@keyframes color-grow4 {
-  0% {
-    font-size: 14px;
-  }
-  80% {
-    font-size: 160px;
-  }
-  100% {
-    transform: rotate(-30deg);
-  }
-}
+
 .splotch {
   position: absolute;
-  background-color: inherit;
   border-radius: 50%;
   animation: splotch-animation 1s forwards;
   overflow: hidden;
+  mix-blend-mode: color-burn;
   width: var(--splotch-size);
   height: var(--splotch-size);
   opacity: 50%;
@@ -93,31 +71,15 @@ body {
   }
 }
 
-.gameOver {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 200px;
-  white-space: nowrap;
+.text-gameOver {
+  font-weight: 700;
+  font-size: clamp(2rem, 10vw, 6rem);
+  width: fit-content;
   color: red;
   z-index: 1;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  text-shadow: 10px 10px 2px rgba(0, 0, 0, 0.5);
-  -webkit-text-stroke: 1px black;
 }
 
-#scoreboard {
-  position: absolute;
-  top: 2%;
-  left: 2%;
-  font-size: 40px;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-  z-index: 1000;
-}
-
-#colorInput {
+.color-input {
   position: absolute;
   left: 50%;
   top: 10%;
@@ -129,13 +91,20 @@ body {
     "Lucida Sans", Arial, sans-serif;
 }
 
-#playAgainButton {
-  font-size: 24px;
+.text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: absolute;
-  top: 68%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 10px 20px;
+}
+.play-again-btn {
+  font-size: clamp(14px, 4vw, 20px);
+  display: none;
+  padding: 10px 16px;
+  width: fit-content;
   background-color: #4caf50;
   border: none;
   color: white;
@@ -144,54 +113,9 @@ body {
   transition: background-color 0.2s;
   z-index: 1;
   border-radius: 10px;
-  border: 2px solid white;
   box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.5);
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
 }
 
-#playAgainButton:hover {
+.play-again-btn:hover {
   background-color: #45a049;
-}
-
-.hidden {
-  display: none;
-}
-
-.changeColor {
-  background-color: lightblue;
-}
-
-#startGame {
-  font-size: 70px;
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 25px 25px;
-  background-color: #4caf50;
-  color: white;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: background-color 0.2s;
-  z-index: 1;
-  border-radius: 10px;
-  border: 2px solid white;
-  box-shadow: 5px 5px 2px rgba(0, 0, 0, 0.5);
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-}
-
-#startGame:hover {
-  background-color: #45a049;
-}
-
-#highScore {
-  position: absolute;
-  top: 2%;
-  right: 2%;
-  font-size: 40px;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-  z-index: 1000;
 }
